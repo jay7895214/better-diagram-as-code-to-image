@@ -61,9 +61,13 @@ function App() {
     if (!renderer || !debouncedCode) return;
 
     let isMounted = true;
-    setIsLoading(true);
+    
+    const loadingTimer = setTimeout(() => {
+      if (isMounted) setIsLoading(true);
+    }, 150);
 
     renderer.render(debouncedCode, version).then((result) => {
+      clearTimeout(loadingTimer);
       if (!isMounted) return;
       if (result.success) {
         setSvg(result.svg);
@@ -76,6 +80,7 @@ function App() {
 
     return () => {
       isMounted = false;
+      clearTimeout(loadingTimer);
     };
   }, [debouncedCode, renderer, version]);
 
@@ -134,7 +139,7 @@ function App() {
     });
   };
 
-  const currentVersion = import.meta.env.VITE_APP_VERSION || "v1.0.0";
+  const currentVersion = `v${__APP_VERSION__}`;
 
   return (
     <div className={`app-container ${isDarkMode ? 'dark-theme' : ''}`}>

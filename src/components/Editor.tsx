@@ -1,5 +1,6 @@
 import CodeMirror from "@uiw/react-codemirror";
 import { oneDark } from "@codemirror/theme-one-dark";
+import { colorPickerPlugin } from "../extensions/colorPicker";
 
 interface EditorProps {
   code: string;
@@ -14,6 +15,7 @@ export function Editor({ code, onChange, isDarkMode = false }: EditorProps) {
         value={code}
         height="100%"
         theme={isDarkMode ? oneDark : "light"}
+        extensions={[colorPickerPlugin]}
         onChange={(val) => onChange(val)}
         basicSetup={{
           lineNumbers: true,

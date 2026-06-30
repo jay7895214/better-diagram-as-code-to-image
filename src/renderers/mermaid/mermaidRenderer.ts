@@ -33,6 +33,7 @@ export const mermaidRenderer: DiagramRenderer = {
         startOnLoad: false,
         securityLevel: "strict",
         fontFamily: "'Noto Sans TC', 'Microsoft JhengHei', sans-serif",
+        suppressErrorOutput: true,
       });
 
       // 在 render 之前先 parse，避免 Mermaid 渲染失敗時將錯誤區塊強行注入 DOM
