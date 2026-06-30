@@ -38,6 +38,7 @@
   },
   "samples": {
     "mermaid": "%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#a7dbd8', 'edgeLabelBackground':'#e0e4cc', 'tertiaryColor': '#f38630'}}}%%\ngraph TD\n  A[Start] --> B{Is it raining?}\n  B -->|Yes| C[Take Umbrella]\n  B -->|No| D[No Umbrella]",
-    "plantuml": "@startuml\nskinparam backgroundColor #FFFFFF\nskinparam sequenceLifeLineBorderColor #f38630\nskinparam sequenceParticipantBorderColor #a7dbd8\nAlice -> Bob: Hello\nBob --> Alice: Hi!\n@enduml"
+    "plantuml": "@startuml\nskinparam backgroundColor #FFFFFF\nskinparam sequenceLifeLineBorderColor #f38630\nskinparam sequenceParticipantBorderColor #a7dbd8\nAlice -> Bob: Hello\nBob --> Alice: Hi!\n@enduml",
+    "d2": "direction: right\n\nx -> y: Hello D2"
   }
 }

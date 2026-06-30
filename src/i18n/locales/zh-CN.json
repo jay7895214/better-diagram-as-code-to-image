@@ -38,6 +38,7 @@
   },
   "samples": {
     "mermaid": "%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#a7dbd8', 'edgeLabelBackground':'#e0e4cc', 'tertiaryColor': '#f38630'}}}%%\ngraph TD\n  A[开始] --> B{是否下雨?}\n  B -->|是| C[带雨伞]\n  B -->|否| D[不用带雨伞]",
-    "plantuml": "@startuml\nskinparam backgroundColor #FFFFFF\nskinparam sequenceLifeLineBorderColor #f38630\nskinparam sequenceParticipantBorderColor #a7dbd8\nAlice -> Bob: 你好\nBob --> Alice: 嗨！\n@enduml"
+    "plantuml": "@startuml\nskinparam backgroundColor #FFFFFF\nskinparam sequenceLifeLineBorderColor #f38630\nskinparam sequenceParticipantBorderColor #a7dbd8\nAlice -> Bob: 你好\nBob --> Alice: 嗨！\n@enduml",
+    "d2": "direction: right\n\nx -> y: 你好 D2"
   }
 }

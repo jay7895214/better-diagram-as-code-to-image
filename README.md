@@ -2,13 +2,13 @@
 
 [繁體中文](./README.zh-TW.md) | [English](./README.md)
 
-![Version](https://img.shields.io/badge/version-1.4.0-blue)
+![Version](https://img.shields.io/badge/version-1.5.0-blue)
 ![React](https://img.shields.io/badge/react-18.3.1-61DAFB?logo=react)
 
-A powerful tool to render Mermaid and PlantUML code in real-time and export them as high-quality images.
+A powerful tool to render Mermaid, PlantUML, and D2 code in real-time and export them as high-quality images.
 
 ## Features
-* **Multi-Engine Support**: Built-in support for Mermaid and PlantUML.
+* **Multi-Engine Support**: Built-in support for Mermaid, PlantUML, and D2.
 * **Multi-Language Interface**: English, Traditional Chinese, and Simplified Chinese are natively supported.
 * **PlantUML Server**: A public PlantUML server (default: `http://www.plantuml.com/plantuml`) is used.
   - ⚠️ **Warning**: Do not enter any sensitive or confidential data.

@@ -37,7 +37,8 @@
     "plantumlServer": "PlantUML 伺服器："
   },
   "samples": {
-    "mermaid": "%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#a7dbd8', 'edgeLabelBackground':'#e0e4cc', 'tertiaryColor': '#f38630'}}}%%\ngraph TD\n  A[開始] --> B{是否下雨?}\n  B -->|是| C[帶雨傘]\n  B -->|否| D[不用帶雨傘]",
-    "plantuml": "@startuml\nskinparam backgroundColor #FFFFFF\nskinparam sequenceLifeLineBorderColor #f38630\nskinparam sequenceParticipantBorderColor #a7dbd8\nAlice -> Bob: 你好\nBob --> Alice: 嗨！\n@enduml"
+    "mermaid": "graph TD\n    A[客戶端] --> B[負載均衡]\n    B --> C[伺服器 01]\n    B --> D[伺服器 02]",
+    "plantuml": "@startuml\nactor 使用者\n使用者 -> 伺服器: 請求\n伺服器 --> 使用者: 回應\n@enduml",
+    "d2": "direction: right\n\nx -> y: 你好 D2"
   }
 }

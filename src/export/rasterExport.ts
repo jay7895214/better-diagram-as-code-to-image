@@ -22,8 +22,34 @@ export async function exportSvgToRaster(
   div.style.pointerEvents = "none";
   document.body.appendChild(div);
   const bbox = svgEl.getBoundingClientRect();
-  const width = bbox.width;
-  const height = bbox.height;
+  let width = bbox.width;
+  let height = bbox.height;
+
+  // Fallback: 如果隱藏 div 造成寬高為 0，嘗試從 viewBox 或原始屬性讀取
+  if (width === 0 || height === 0) {
+    const viewBox = svgEl.getAttribute("viewBox");
+    if (viewBox) {
+      const parts = viewBox.split(/[\s,]+/).filter(Boolean);
+      if (parts.length >= 4) {
+        width = parseFloat(parts[2]);
+        height = parseFloat(parts[3]);
+      }
+    }
+  }
+  
+  if (width === 0 || height === 0) {
+    const attrW = svgEl.getAttribute("width");
+    const attrH = svgEl.getAttribute("height");
+    if (attrW) width = parseFloat(attrW);
+    if (attrH) height = parseFloat(attrH);
+  }
+
+  if (width === 0 || height === 0 || isNaN(width) || isNaN(height)) {
+    // 若真的抓不到，給一個預設大小避免 canvas 報錯
+    width = width || 800;
+    height = height || 600;
+  }
+
   document.body.removeChild(div);
 
   const clonedSvgEl = svgEl.cloneNode(true) as SVGSVGElement;

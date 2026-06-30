@@ -2,15 +2,17 @@
 
 [繁體中文](./README.zh-TW.md) | [English](./README.md)
 
-![Version](https://img.shields.io/badge/version-1.4.0-blue)
+![Version](https://img.shields.io/badge/version-1.5.0-blue)
 ![React](https://img.shields.io/badge/react-18.3.1-61DAFB?logo=react)
 
-將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。
+將 Mermaid、PlantUML 與 D2 程式碼即時渲染並匯出為高品質圖片的強大工具。
 
 ## 功能特色
-* **支援多種引擎**：內建支援 Mermaid 與 PlantUML。
+* **支援多種引擎**：內建支援 Mermaid、PlantUML 與 D2。
+  - **Mermaid**：完全離線，本地渲染。
   - **PlantUML Server**：預設使用公開的 PlantUML 伺服器 (`http://www.plantuml.com/plantuml`) 進行轉譯。
-  - ⚠️ **警告**：請勿在此輸入任何機密或敏感的資料，因資料將被傳送至外部伺服器。
+    - ⚠️ **警告**：請勿在此輸入任何機密或敏感的資料，因資料將被傳送至外部伺服器。
+  - **D2**：完全離線，基於 WASM 的聲明式繪圖引擎。
 * **多語系支援**：內建英文、繁體中文與簡體中文介面。
 * **即時預覽**：一邊編寫程式碼，一邊即時查看渲染結果。
 * **智慧調色盤**：編輯器內建行內選色器，偵測到色碼即可點擊切換顏色，所見即所得。

@@ -21,14 +21,26 @@ function App() {
   const initialShareState = parseShareUrl();
   const initialDraftState = getDraftState();
   const fallbackRenderer = getRendererById("mermaid")!;
+  let targetEngineId = initialShareState?.engine || initialDraftState?.engine || "mermaid";
+  let targetRenderer = getRendererById(targetEngineId);
   
-  const initialEngineId = initialShareState?.engine || initialDraftState?.engine || "mermaid";
-  const initialVersion = initialShareState?.version || initialDraftState?.version || fallbackRenderer.defaultVersion;
-  const initialCode = initialShareState?.code || initialDraftState?.code || t(`samples.${initialEngineId}`) || fallbackRenderer.defaultSampleCode;
+  if (!targetRenderer) {
+    targetEngineId = "mermaid";
+    targetRenderer = fallbackRenderer;
+  }
+
+  let targetVersion = initialShareState?.version || initialDraftState?.version || targetRenderer.defaultVersion;
+  if (!targetRenderer.supportedVersions.includes(targetVersion)) {
+    targetVersion = targetRenderer.defaultVersion;
+  }
+  
+  const sampleKey = `samples.${targetEngineId}`;
+  const translatedSample = i18n.exists(sampleKey) ? t(sampleKey) : targetRenderer.defaultSampleCode;
+  const initialCode = initialShareState?.code || initialDraftState?.code || translatedSample;
 
   const [state, setState] = useDraftPersistence({
-    engine: initialEngineId,
-    version: initialVersion,
+    engine: targetEngineId,
+    version: targetVersion,
     code: initialCode,
   });
 
@@ -73,6 +85,7 @@ function App() {
         setSvg(result.svg);
         setError(undefined);
       } else {
+        setSvg(undefined);
         setError(result.error);
       }
       setIsLoading(false);
@@ -100,10 +113,13 @@ function App() {
       if (newRenderer.requiresExternalService) {
         toast.warning(t("engine.plantumlWarning"), { duration: 5000 });
       }
+      const sampleKey = `samples.${newEngineId}`;
+      const translatedSample = i18n.exists(sampleKey) ? t(sampleKey) : newRenderer.defaultSampleCode;
+      
       setState({
         engine: newEngineId,
         version: newRenderer.defaultVersion,
-        code: t(`samples.${newEngineId}`) || newRenderer.defaultSampleCode,
+        code: translatedSample,
       });
     }
   };
