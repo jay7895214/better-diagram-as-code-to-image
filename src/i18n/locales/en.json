@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Better Diagrams as Code to Image",
-    "description": "A powerful tool to render Mermaid and PlantUML code in real-time and export them as high-quality images.",
+    "description": "A powerful tool to render Mermaid, PlantUML, and D2 code in real-time and export them as high-quality images.",
     "repo": "GitHub Repository",
     "copyLinkSuccess": "Share link copied to clipboard!",
     "copyLinkFail": "Failed to copy link: ",

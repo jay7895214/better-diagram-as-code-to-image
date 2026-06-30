@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Better Diagrams as Code to Image",
-    "description": "將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。",
+    "description": "將 Mermaid、PlantUML 與 D2 程式碼即時渲染並匯出為高品質圖片的強大工具。",
     "repo": "GitHub 倉庫",
     "copyLinkSuccess": "分享連結已複製到剪貼簿！",
     "copyLinkFail": "複製失敗：",
