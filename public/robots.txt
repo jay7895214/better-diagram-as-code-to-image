@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jay7895214.github.io/better-diagram-as-code-to-image/sitemap.xml

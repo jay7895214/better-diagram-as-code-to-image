@@ -1,30 +1,32 @@
 # Better Diagrams as Code to Image
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue)
+[繁體中文](./README.zh-TW.md) | [English](./README.md)
 
-將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。
+![Version](https://img.shields.io/badge/version-1.3.1-blue)
 
-## 功能特色
-* **支援多種引擎**：內建支援 Mermaid 與 PlantUML。
-* **多語系支援**：內建英文、繁體中文與簡體中文介面。
-* **即時預覽**：一邊編寫程式碼，一邊即時查看渲染結果。
-* **多格式匯出**：支援將圖表匯出為 PNG、JPG 與 SVG 格式。
-* **高解析度下載**：可自由設定解析度倍率（最高 20 倍）下載高清圖片。
-* **無縫剪貼簿支援**：一鍵將高畫質 PNG 複製到剪貼簿，輕鬆貼入報告或文件中。
-* **分享連結**：將您的程式碼打包成 URL，方便與他人分享。
-* **深淺色模式**：自動同步作業系統主題，亦可手動切換。
-* **智慧調色盤**：編輯器內建行內選色器，偵測到色碼即可點擊切換顏色，所見即所得。
+A powerful tool to render Mermaid and PlantUML code in real-time and export them as high-quality images.
 
-## 開發指令
-本專案基於 React + TypeScript + Vite 構建。
+## Features
+* **Multi-Engine Support**: Built-in support for Mermaid and PlantUML.
+* **Multi-Language Interface**: English, Traditional Chinese, and Simplified Chinese are natively supported.
+* **Real-time Preview**: See the rendered diagram instantly as you write code.
+* **Smart Color Palette**: The editor features an inline color picker. It automatically detects hex codes and allows you to change colors with a simple click.
+* **Multi-Format Export**: Export your diagrams in PNG, JPG, and SVG formats.
+* **High-Resolution Download**: Set the scale factor (up to 20x) to download crystal clear, high-definition images.
+* **Seamless Clipboard Support**: One-click copy high-quality PNGs directly to your clipboard for easy pasting into reports or documents.
+* **Shareable Links**: Encode your code into a URL for instant sharing.
+* **Dark Mode**: Automatically syncs with your system theme, or manually toggleable.
+
+## Development
+This project is built with React + TypeScript + Vite.
 
 ```bash
-# 安裝依賴
+# Install dependencies
 npm install
 
-# 啟動開發伺服器
+# Start development server
 npm run dev
 
-# 編譯打包
+# Build for production
 npm run build
 ```
