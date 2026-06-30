@@ -13,7 +13,8 @@
     "language": "Language"
   },
   "editor": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "paste": "Paste"
   },
   "export": {
     "format": "Format:",
@@ -30,7 +31,7 @@
     "copyWarning": "Clipboard copy will be forced to PNG format"
   },
   "engine": {
-    "label": "Rendering Engine:",
+    "label": "Engine:",
     "version": "Version:",
     "plantumlWarning": "This engine sends code to an external server. Do NOT enter sensitive information.",
     "plantumlServer": "PlantUML Server:"

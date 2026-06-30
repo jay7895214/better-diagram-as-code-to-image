@@ -165,10 +165,44 @@
   overflow: hidden;
 }
 
-.editor-container {
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  overflow: auto;
-  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  overflow: hidden; /* 純定位錨點，不參與捲動 */
+}
+
+.editor-scroll-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden; /* 這層也不捲，捲動交給 CodeMirror 內部 */
+}
+
+/* 確保 CodeMirror 的 wrapper div (包含 .cm-theme) 採用 flex 填滿 */
+.editor-scroll-area > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 強制 CodeMirror 自身真的吃滿高度 */
+.editor-scroll-area .cm-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.editor-scroll-area .cm-scroller {
+  flex: 1;
+  min-height: 0;
+  overflow: auto; /* 垂直 + 水平捲軸由這層負責 */
 }
 
 .panel-resizer {
@@ -404,16 +438,16 @@
 
 .app-footer {
   text-align: center;
-  padding: 15px;
-  font-size: 0.85rem;
+  padding: 6px 12px;
+  font-size: 0.75rem;
   color: var(--text-color, #666);
   background-color: var(--header-bg, #f8f9fa);
   border-top: 1px solid var(--border-color, #e5e5e5);
-  line-height: 1.6;
+  line-height: 1.2;
 }
 
 .app-footer p {
-  margin: 0;
+  margin: 2px 0;
 }
 
 .app-footer a {
@@ -471,4 +505,39 @@ svg[id^="dmermaid-render-"]:not([style*="max-width"]) {
     width: 100%;
     flex-wrap: wrap;
   }
+}
+
+.editor-paste-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10;
+  background-color: var(--header-bg, #f8f9fa);
+  border: 1px solid var(--border-color, #ccc);
+  color: var(--text-color, #333);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+}
+
+.editor-paste-btn:hover {
+  background-color: #e2e6ea;
+  transform: translateY(-2px);
+}
+
+:root.dark .editor-paste-btn {
+  background-color: #252526;
+  border-color: #3e3e42;
+  color: #cccccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+:root.dark .editor-paste-btn:hover {
+  background-color: #3e3e42;
+  color: #ffffff;
 }

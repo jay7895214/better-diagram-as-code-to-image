@@ -13,7 +13,8 @@
     "language": "语言"
   },
   "editor": {
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "paste": "粘贴"
   },
   "export": {
     "format": "格式：",
