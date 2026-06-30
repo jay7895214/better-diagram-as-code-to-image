@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { getRendererById, RENDERER_REGISTRY } from "../renderers/registry";
-import { AlertTriangle } from "lucide-react";
 
 interface EngineSelectorProps {
   engineId: string;
@@ -14,15 +13,7 @@ export function EngineSelector({ engineId, version, onEngineChange, onVersionCha
   const currentRenderer = getRendererById(engineId);
 
   return (
-    <div className="engine-selector">
-      {currentRenderer?.requiresExternalService && (
-        <span className="external-service-warning">
-          <AlertTriangle size={14} />
-          {t("engine.plantumlWarning")}
-        </span>
-      )}
-
-      <div className="selector-group">
+    <div className="engine-selector">      <div className="selector-group">
         <label htmlFor="engine-select">{t("engine.label")}</label>
         <select
           id="engine-select"
@@ -38,7 +29,7 @@ export function EngineSelector({ engineId, version, onEngineChange, onVersionCha
       </div>
 
       <div className="selector-group">
-        <label htmlFor="version-select">版本：</label>
+        <label htmlFor="version-select">{t("engine.version")}</label>
         <select
           id="version-select"
           value={version}

@@ -31,7 +31,8 @@
   },
   "engine": {
     "label": "渲染引擎：",
-    "plantumlWarning": "(此引擎会将代码发送至外部服务器进行处理，请勿输入机密内容。)",
+    "version": "版本：",
+    "plantumlWarning": "此引擎会将代码发送至外部服务器进行处理，请勿输入机密内容。",
     "plantumlServer": "PlantUML 服务器："
   },
   "samples": {

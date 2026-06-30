@@ -8,12 +8,15 @@ import { useDebounce } from "./hooks/useDebounce";
 import { getRendererById } from "./renderers/registry";
 import { useDraftPersistence, getDraftState } from "./hooks/useDraftPersistence";
 import { generateShareUrl, parseShareUrl } from "./share/shareUrl";
-import { Moon, Sun, Share2 } from "lucide-react";
+import { Moon, Sun, Share2, GripVertical, GripHorizontal } from "lucide-react";
 import { Toaster, toast } from "sonner";
+import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from "react-resizable-panels";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 import "./App.css";
 
 function App() {
   const { t, i18n } = useTranslation();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   // Initialization order: Share URL > LocalStorage > Default
   const initialShareState = parseShareUrl();
   const initialDraftState = getDraftState();
@@ -86,10 +89,12 @@ function App() {
     }
   }, [isDarkMode]);
 
-  // Handle engine change
   const handleEngineChange = (newEngineId: string) => {
     const newRenderer = getRendererById(newEngineId);
     if (newRenderer) {
+      if (newRenderer.requiresExternalService) {
+        toast.warning(t("engine.plantumlWarning"), { duration: 5000 });
+      }
       setState({
         engine: newEngineId,
         version: newRenderer.defaultVersion,
@@ -177,20 +182,28 @@ function App() {
       </div>
 
       <main className="app-main">
-        <div className="left-pane">
-          <Editor code={code} onChange={handleCodeChange} isDarkMode={isDarkMode} />
-        </div>
-        
-        <div className="right-pane">
-          <PreviewPane svg={svg} error={error} isLoading={isLoading} />
-        </div>
+        <PanelGroup orientation={isMobile ? "vertical" : "horizontal"} className="panel-group">
+          <Panel defaultSize={50} minSize={20} className="left-pane">
+            <Editor code={code} onChange={handleCodeChange} isDarkMode={isDarkMode} />
+          </Panel>
+          
+          <PanelResizeHandle className="panel-resizer">
+            <div className="resizer-handle">
+              {isMobile ? <GripHorizontal size={16} /> : <GripVertical size={16} />}
+            </div>
+          </PanelResizeHandle>
+          
+          <Panel defaultSize={50} minSize={20} className="right-pane">
+            <PreviewPane svg={svg} error={error} isLoading={isLoading} />
+          </Panel>
+        </PanelGroup>
       </main>
 
       <footer className="app-footer">
-        <p>{t("app.description")}</p>
+        <p className="footer-desc">{t("app.description")}</p>
         <p>
           {t("app.title")} {currentVersion} - Powered by Vite + React | 
-          <a href="https://github.com/jay78/better-diagram-as-code-to-image" target="_blank" rel="noopener noreferrer"> {t("app.repo")}</a>
+          <a href="https://github.com/jay7895214/better-diagram-as-code-to-image" target="_blank" rel="noopener noreferrer"> {t("app.repo")}</a>
         </p>
       </footer>
     </div>

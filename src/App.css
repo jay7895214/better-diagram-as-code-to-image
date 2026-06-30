@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  overflow: hidden; /* Lock viewport */
 }
 
 .app-header {
@@ -137,6 +138,7 @@
   align-items: center;
   background-color: var(--header-bg, #f8f9fa);
   border-bottom: 1px solid var(--border-color, #e5e5e5);
+  container-type: inline-size; /* Enable container queries */
 }
 
 :root.dark .sub-header-toolbar {
@@ -148,27 +150,80 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  height: 100%;
+}
+
+.panel-group {
+  width: 100%;
+  height: 100%;
 }
 
 .left-pane {
-  flex: 1;
-  border-right: 1px solid var(--border-color, #e5e5e5);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 .editor-container {
   flex: 1;
   overflow: auto;
+  height: 100%;
+}
+
+.panel-resizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--header-bg, #f8f9fa);
+  border-left: 1px solid var(--border-color, #e5e5e5);
+  border-right: 1px solid var(--border-color, #e5e5e5);
+  color: var(--text-color, #666);
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+
+.panel-resizer[data-panel-group-direction="vertical"] {
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid var(--border-color, #e5e5e5);
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  height: 14px !important;
+}
+
+.panel-resizer[data-panel-group-direction="horizontal"] {
+  width: 14px !important;
+}
+
+.panel-resizer:hover, .panel-resizer[data-resize-handle-state="drag"] {
+  background-color: #e5e7eb;
+}
+
+:root.dark .panel-resizer {
+  background-color: #2a2a2a;
+}
+
+:root.dark .panel-resizer:hover, :root.dark .panel-resizer[data-resize-handle-state="drag"] {
+  background-color: #3f3f46;
+}
+
+.resizer-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.panel-resizer:hover .resizer-handle {
+  opacity: 1;
 }
 
 .right-pane {
-  flex: 1;
   display: flex;
   flex-direction: column;
   background-color: var(--preview-bg, #ffffff);
   position: relative;
+  height: 100%;
   overflow: auto;
 }
 .export-controls {
@@ -380,3 +435,40 @@ svg[id^="dmermaid-render-"]:not([style*="max-width"]) {
   display: none !important;
 }
 
+/* ==========================================================================
+   Responsive Web Design (RWD) & Container Queries
+   ========================================================================== */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    height: auto;
+  }
+
+  .header-controls {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .footer-desc {
+    display: none;
+  }
+}
+
+/* Container Queries for Export Controls */
+@container (max-width: 600px) {
+  .export-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .export-options,
+  .export-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}

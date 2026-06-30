@@ -1,6 +1,6 @@
 # Better Diagrams as Code to Image
 
-![Version](https://img.shields.io/badge/version-1.1.0-blue)
+![Version](https://img.shields.io/badge/version-1.2.0-blue)
 
 將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。
 
