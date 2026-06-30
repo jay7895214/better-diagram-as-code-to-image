@@ -19,21 +19,39 @@ export async function exportSvgToRaster(
   // 短暫掛載到畫面以取得精準尺寸
   div.style.position = "absolute";
   div.style.visibility = "hidden";
+  div.style.pointerEvents = "none";
   document.body.appendChild(div);
   const bbox = svgEl.getBoundingClientRect();
   const width = bbox.width;
   const height = bbox.height;
   document.body.removeChild(div);
 
-  if (!width || !height || width === 0 || height === 0) {
-    throw new Error("無法判斷圖表尺寸");
+  const clonedSvgEl = svgEl.cloneNode(true) as SVGSVGElement;
+  clonedSvgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  if (!clonedSvgEl.hasAttribute("xmlns:xlink")) {
+    clonedSvgEl.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
   }
+  clonedSvgEl.setAttribute("width", width.toString());
+  clonedSvgEl.setAttribute("height", height.toString());
+  if (!clonedSvgEl.hasAttribute("viewBox")) {
+    clonedSvgEl.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  }
+  clonedSvgEl.style.fontFamily = "'Noto Sans TC', sans-serif";
+
+  // 使用 XMLSerializer 可以修復 Mermaid 產生之不合法的 HTML 標籤（如未關閉的 <br>）
+  const serializer = new XMLSerializer();
+  const safeSvgString = serializer.serializeToString(clonedSvgEl);
+  
+  // 使用 Data URI 而非 Blob URL，因為 Blob URL 配合 XMLSerializer 產生的 foreignObject xmlns 容易在 Canvas 畫圖時被瀏覽器誤判為跨域污染 (Taint)
+  const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(safeSvgString)}`;
 
   const canvas = document.createElement("canvas");
   canvas.width = width * options.scale;
   canvas.height = height * options.scale;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("無法取得 Canvas context");
+  if (!ctx) {
+    throw new Error("無法取得 Canvas context");
+  }
 
   if (options.format === "jpg" || options.backgroundColor) {
     ctx.fillStyle = options.backgroundColor || "#ffffff";
@@ -42,29 +60,18 @@ export async function exportSvgToRaster(
 
   ctx.scale(options.scale, options.scale);
 
-  // 2. 對原始字串進行 Regex 替換，注入精確的寬高與字體
-  // (避免使用 XMLSerializer 破壞 Mermaid 內部不標準的 HTML / foreignObject)
-  const cleanSvgString = svgString
-    .replace(/(<svg[^>]*?)\s+width="[^"]*"/g, "$1")
-    .replace(/(<svg[^>]*?)\s+height="[^"]*"/g, "$1");
+  try {
+    const img = new Image();
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error("SVG 轉換成 Image 失敗 (SVG 可能不是有效 XML 或內含不允許的外部資源)"));
+      img.src = svgUrl;
+    });
 
-  const svgWithFont = cleanSvgString.replace(
-    "<svg",
-    `<svg width="${width}" height="${height}" style="font-family: 'Noto Sans TC', sans-serif;" xmlns="http://www.w3.org/2000/svg"`
-  );
-
-  const svgBlob = new Blob([svgWithFont], { type: "image/svg+xml;charset=utf-8" });
-  const svgUrl = URL.createObjectURL(svgBlob);
-
-  const img = new Image();
-  await new Promise<void>((resolve, reject) => {
-    img.onload = () => resolve();
-    img.onerror = () => reject(new Error("SVG 轉換成 Image 失敗"));
-    img.src = svgUrl;
-  });
-
-  ctx.drawImage(img, 0, 0, width, height);
-  URL.revokeObjectURL(svgUrl);
+    ctx.drawImage(img, 0, 0, width, height);
+  } finally {
+    // No need to revoke Data URI
+  }
 
   const mimeType = options.format === "png" ? "image/png" : "image/jpeg";
   return new Promise((resolve, reject) => {

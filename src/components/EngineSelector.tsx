@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { getRendererById, RENDERER_REGISTRY } from "../renderers/registry";
 import { AlertTriangle } from "lucide-react";
 
@@ -9,6 +10,7 @@ interface EngineSelectorProps {
 }
 
 export function EngineSelector({ engineId, version, onEngineChange, onVersionChange }: EngineSelectorProps) {
+  const { t } = useTranslation();
   const currentRenderer = getRendererById(engineId);
 
   return (
@@ -16,12 +18,12 @@ export function EngineSelector({ engineId, version, onEngineChange, onVersionCha
       {currentRenderer?.requiresExternalService && (
         <span className="external-service-warning">
           <AlertTriangle size={14} />
-          此引擎會將程式碼傳送至外部伺服器進行處理，請勿輸入機密內容。
+          {t("engine.plantumlWarning")}
         </span>
       )}
 
       <div className="selector-group">
-        <label htmlFor="engine-select">渲染引擎：</label>
+        <label htmlFor="engine-select">{t("engine.label")}</label>
         <select
           id="engine-select"
           value={engineId}

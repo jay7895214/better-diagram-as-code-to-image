@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Download, Copy, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { downloadSvg, copySvgToClipboard } from "../export/svgExport";
@@ -10,6 +11,7 @@ interface ExportControlsProps {
 }
 
 export function ExportControls({ svg, disabled }: ExportControlsProps) {
+  const { t } = useTranslation();
   const [format, setFormat] = useState<"svg" | "png" | "jpg">("png");
   const [scale, setScale] = useState<number>(4);
   const [isExporting, setIsExporting] = useState(false);
@@ -24,9 +26,9 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
         const blob = await exportSvgToRaster(svg, { format, scale });
         downloadBlob(blob, "diagram", format);
       }
-      toast.success("下載成功！");
+      toast.success(t("export.downloadSuccess"));
     } catch (err) {
-      toast.error(`匯出失敗：${err instanceof Error ? err.message : String(err)}`);
+      toast.error(`${t("export.exportFail")}${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setIsExporting(false);
     }
@@ -38,19 +40,19 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
     try {
       if (format === "svg") {
         await copySvgToClipboard(svg);
-        toast.success("SVG 原始碼已複製到剪貼簿！");
+        toast.success(t("export.copySvgSuccess"));
       } else {
         // Force PNG format for clipboard since JPG is not supported by standard Clipboard API
         const blob = await exportSvgToRaster(svg, { format: "png", scale });
         await copyImageToClipboard(blob);
         if (format === "jpg") {
-          toast.success("圖片已使用 PNG 格式複製到剪貼簿！(剪貼簿不支援 JPG)");
+          toast.success(t("export.copyJpgAsPng"));
         } else {
-          toast.success("圖片已複製到剪貼簿！");
+          toast.success(t("export.copySuccess"));
         }
       }
     } catch (err) {
-      toast.error(`複製失敗：${err instanceof Error ? err.message : String(err)}`);
+      toast.error(`${t("export.copyFail")}${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setIsExporting(false);
     }
@@ -60,7 +62,7 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
     <div className="export-controls">
       <div className="export-options">
         <div className="control-group">
-          <label htmlFor="format-select">格式：</label>
+          <label htmlFor="format-select">{t("export.format")}</label>
           <select
             id="format-select"
             value={format}
@@ -75,7 +77,7 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
 
         {format !== "svg" && (
           <div className="control-group" style={{ position: "relative" }}>
-            <label htmlFor="scale-input">解析度倍率：</label>
+            <label htmlFor="scale-input">{t("export.scale")}</label>
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
               <input
                 id="scale-input"
@@ -87,7 +89,7 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
                 onChange={(e) => setScale(Number(e.target.value))}
                 disabled={disabled || isExporting}
                 style={{ width: '80px' }}
-                title="範圍：0.5 ~ 20"
+                title={t("export.scaleHint")}
               />
             </div>
           </div>
@@ -101,16 +103,16 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
           disabled={disabled || isExporting}
         >
           {isExporting ? <Loader2 className="spinner" size={16} /> : <Download size={16} />}
-          下載
+          {t("export.download")}
         </button>
         <button 
           className="btn btn-secondary" 
           onClick={handleCopy}
           disabled={disabled || isExporting}
-          title={format === "jpg" ? "剪貼簿複製將強制轉換為 PNG 格式" : ""}
+          title={format === "jpg" ? t("export.copyWarning") : ""}
         >
           {isExporting ? <Loader2 className="spinner" size={16} /> : <Copy size={16} />}
-          複製
+          {t("export.copy")}
         </button>
       </div>
     </div>

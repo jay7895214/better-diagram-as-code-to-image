@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { AlertCircle, Loader2 } from "lucide-react";
 
 interface PreviewPaneProps {
@@ -8,6 +9,7 @@ interface PreviewPaneProps {
 }
 
 export function PreviewPane({ svg, error, isLoading }: PreviewPaneProps) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 當 svg 更新時，將其插入 DOM
@@ -30,8 +32,8 @@ export function PreviewPane({ svg, error, isLoading }: PreviewPaneProps) {
       {/* 載入中遮罩 */}
       {isLoading && (
         <div className="loading-overlay">
-          <Loader2 className="spinner" />
-          <span>渲染中...</span>
+          <Loader2 className="spinner" size={24} />
+          <span>{t("editor.loading")}</span>
         </div>
       )}
 

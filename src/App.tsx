@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Editor } from "./components/Editor";
 import { PreviewPane } from "./components/PreviewPane";
 import { EngineSelector } from "./components/EngineSelector";
@@ -12,6 +13,7 @@ import { Toaster, toast } from "sonner";
 import "./App.css";
 
 function App() {
+  const { t, i18n } = useTranslation();
   // Initialization order: Share URL > LocalStorage > Default
   const initialShareState = parseShareUrl();
   const initialDraftState = getDraftState();
@@ -19,7 +21,7 @@ function App() {
   
   const initialEngineId = initialShareState?.engine || initialDraftState?.engine || "mermaid";
   const initialVersion = initialShareState?.version || initialDraftState?.version || fallbackRenderer.defaultVersion;
-  const initialCode = initialShareState?.code || initialDraftState?.code || fallbackRenderer.defaultSampleCode;
+  const initialCode = initialShareState?.code || initialDraftState?.code || t(`samples.${initialEngineId}`) || fallbackRenderer.defaultSampleCode;
 
   const [state, setState] = useDraftPersistence({
     engine: initialEngineId,
@@ -91,7 +93,7 @@ function App() {
       setState({
         engine: newEngineId,
         version: newRenderer.defaultVersion,
-        code: newRenderer.defaultSampleCode,
+        code: t(`samples.${newEngineId}`) || newRenderer.defaultSampleCode,
       });
     }
   };
@@ -108,10 +110,23 @@ function App() {
     const url = generateShareUrl(state);
     try {
       await navigator.clipboard.writeText(url);
-      toast.success("分享連結已複製到剪貼簿！");
+      toast.success(t("app.copyLinkSuccess"));
     } catch (err) {
-      toast.error(`複製失敗：${err instanceof Error ? err.message : String(err)}`);
+      toast.error(`${t("app.copyLinkFail")}${err instanceof Error ? err.message : String(err)}`);
     }
+  };
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLang = e.target.value;
+    const isOldSample = ['en', 'zh-TW', 'zh-CN'].some(lng => 
+      t(`samples.${state.engine}`, { lng }) === state.code
+    ) || state.code === renderer?.defaultSampleCode;
+
+    i18n.changeLanguage(newLang).then(() => {
+      if (isOldSample) {
+        handleCodeChange(i18n.t(`samples.${state.engine}`, { lng: newLang }));
+      }
+    });
   };
 
   const currentVersion = import.meta.env.VITE_APP_VERSION || "v1.0.0";
@@ -128,18 +143,28 @@ function App() {
             onEngineChange={handleEngineChange}
             onVersionChange={handleVersionChange}
           />
+          <select 
+            value={i18n.resolvedLanguage || 'en'} 
+            onChange={handleLanguageChange}
+            style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--border-color, #ccc)', background: 'var(--header-bg)', color: 'var(--text-color)' }}
+            title={t("app.language")}
+          >
+            <option value="en">EN</option>
+            <option value="zh-TW">繁體</option>
+            <option value="zh-CN">简体</option>
+          </select>
           <button 
             className="header-btn" 
             onClick={handleShare}
-            title="複製分享連結"
+            title={t("app.copyLink")}
           >
             <Share2 size={16} />
-            分享
+            {t("app.copyLink")}
           </button>
           <button 
             className="theme-toggle" 
             onClick={() => setIsDarkMode(!isDarkMode)}
-            title="切換深色/淺色模式"
+            title={t("app.themeToggle")}
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -162,10 +187,10 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。</p>
+        <p>{t("app.description")}</p>
         <p>
-          Better Diagrams as Code to Image {currentVersion} - Powered by Vite + React | 
-          <a href="https://github.com/jay78/better-diagram-as-code-to-image" target="_blank" rel="noopener noreferrer"> GitHub Repository</a>
+          {t("app.title")} {currentVersion} - Powered by Vite + React | 
+          <a href="https://github.com/jay78/better-diagram-as-code-to-image" target="_blank" rel="noopener noreferrer"> {t("app.repo")}</a>
         </p>
       </footer>
     </div>

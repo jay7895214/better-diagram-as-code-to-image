@@ -1,0 +1,41 @@
+{
+  "app": {
+    "title": "Better Diagrams as Code to Image",
+    "description": "將 Mermaid 與 PlantUML 程式碼即時渲染並匯出為高品質圖片的強大工具。",
+    "repo": "GitHub 倉庫",
+    "copyLinkSuccess": "分享連結已複製到剪貼簿！",
+    "copyLinkFail": "複製失敗：",
+    "lightMode": "淺色模式",
+    "darkMode": "深色模式",
+    "systemMode": "跟隨系統",
+    "themeToggle": "切換主題",
+    "copyLink": "複製連結",
+    "language": "語言"
+  },
+  "editor": {
+    "loading": "載入中..."
+  },
+  "export": {
+    "format": "格式：",
+    "scale": "解析度倍率：",
+    "download": "下載",
+    "copy": "複製",
+    "downloadSuccess": "下載成功！",
+    "exportFail": "匯出失敗：",
+    "copySvgSuccess": "SVG 原始碼已複製到剪貼簿！",
+    "copyJpgAsPng": "圖片已使用 PNG 格式複製到剪貼簿！(剪貼簿不支援 JPG)",
+    "copySuccess": "圖片已複製到剪貼簿！",
+    "copyFail": "複製失敗：",
+    "scaleHint": "範圍：0.5 ~ 20",
+    "copyWarning": "剪貼簿複製將強制轉換為 PNG 格式"
+  },
+  "engine": {
+    "label": "渲染引擎：",
+    "plantumlWarning": "(此引擎會將程式碼傳送至外部伺服器進行處理，請勿輸入機密內容。)",
+    "plantumlServer": "PlantUML 伺服器："
+  },
+  "samples": {
+    "mermaid": "graph TD\n  A[開始] --> B{是否下雨?}\n  B -->|是| C[帶雨傘]\n  B -->|否| D[不用帶雨傘]",
+    "plantuml": "@startuml\nAlice -> Bob: 你好\nBob --> Alice: 嗨！\n@enduml"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "app": {
+    "title": "Better Diagrams as Code to Image",
+    "description": "A powerful tool to render Mermaid and PlantUML code in real-time and export them as high-quality images.",
+    "repo": "GitHub Repository",
+    "copyLinkSuccess": "Share link copied to clipboard!",
+    "copyLinkFail": "Failed to copy link: ",
+    "lightMode": "Light Mode",
+    "darkMode": "DarkMode",
+    "systemMode": "System Mode",
+    "themeToggle": "Toggle Theme",
+    "copyLink": "Copy Link",
+    "language": "Language"
+  },
+  "editor": {
+    "loading": "Loading..."
+  },
+  "export": {
+    "format": "Format:",
+    "scale": "Scale:",
+    "download": "Download",
+    "copy": "Copy",
+    "downloadSuccess": "Download successful!",
+    "exportFail": "Export failed: ",
+    "copySvgSuccess": "SVG source copied to clipboard!",
+    "copyJpgAsPng": "Image copied to clipboard in PNG format! (Clipboard does not support JPG)",
+    "copySuccess": "Image copied to clipboard!",
+    "copyFail": "Copy failed: ",
+    "scaleHint": "Range: 0.5 ~ 20",
+    "copyWarning": "Clipboard copy will be forced to PNG format"
+  },
+  "engine": {
+    "label": "Rendering Engine:",
+    "plantumlWarning": "(This engine sends code to an external server for processing. Do NOT enter sensitive information.)",
+    "plantumlServer": "PlantUML Server:"
+  },
+  "samples": {
+    "mermaid": "graph TD\n  A[Start] --> B{Is it raining?}\n  B -->|Yes| C[Take Umbrella]\n  B -->|No| D[No Umbrella]",
+    "plantuml": "@startuml\nAlice -> Bob: Hello\nBob --> Alice: Hi!\n@enduml"
+  }
+}
