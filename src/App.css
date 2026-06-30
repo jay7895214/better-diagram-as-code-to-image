@@ -1,0 +1,382 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.app-header {
+  height: 60px;
+  background-color: var(--header-bg, #f8f9fa);
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+:root.dark .app-header {
+  --header-bg: #1e1e1e;
+  --border-color: #333;
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.engine-selector {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.selector-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.selector-group select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color, #ccc);
+  background-color: var(--input-bg, #fff);
+  color: var(--text-color, #333);
+}
+
+:root.dark .selector-group select {
+  --input-bg: #333;
+  --text-color: #eee;
+  --border-color: #555;
+}
+
+.external-service-warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d97706;
+  font-size: 0.85rem;
+  background-color: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+:root.dark .external-service-warning {
+  background-color: rgba(217, 119, 6, 0.15);
+  color: #fcd34d;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color, #333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.header-btn {
+  background: none;
+  border: 1px solid var(--border-color, #ccc);
+  cursor: pointer;
+  color: var(--text-color, #333);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+:root.dark .header-btn {
+  --text-color: #eee;
+  --border-color: #555;
+}
+
+.header-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+:root.dark .header-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+:root.dark .theme-toggle {
+  --text-color: #eee;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+:root.dark .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.sub-header-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--header-bg, #f8f9fa);
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+}
+
+:root.dark .sub-header-toolbar {
+  --header-bg: #1e1e1e;
+  --border-color: #333;
+}
+
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.left-pane {
+  flex: 1;
+  border-right: 1px solid var(--border-color, #e5e5e5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.right-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--preview-bg, #ffffff);
+  position: relative;
+  overflow: auto;
+}
+.export-controls {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 100%;
+}
+
+:root.dark .export-controls {
+  background-color: #1e1e1e;
+}
+
+.export-options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.control-group select,
+.control-group input {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color, #ccc);
+  background-color: var(--input-bg, #fff);
+  color: var(--text-color, #333);
+}
+
+:root.dark .control-group select,
+:root.dark .control-group input {
+  --input-bg: #333;
+  --text-color: #eee;
+  --border-color: #555;
+}
+
+.export-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+:root.dark .btn-secondary {
+  background-color: #374151;
+  color: #f3f4f6;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #d1d5db;
+}
+
+:root.dark .btn-secondary:hover:not(:disabled) {
+  background-color: #4b5563;
+}
+
+:root.dark .right-pane {
+  --preview-bg: #2d2d2d;
+}
+
+.preview-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+}
+
+.svg-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.svg-container.loading {
+  opacity: 0.5;
+}
+
+.error-banner {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.error-banner .icon {
+  flex-shrink: 0;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  z-index: 10;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    flex-direction: column;
+  }
+  .left-pane {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+  }
+}
+
+.app-footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.85rem;
+  color: var(--text-color, #666);
+  background-color: var(--header-bg, #f8f9fa);
+  border-top: 1px solid var(--border-color, #e5e5e5);
+  line-height: 1.6;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+:root.dark .app-footer {
+  color: #aaa;
+}
+
+/* 隱藏 Mermaid 渲染錯誤時原生的 SVG / Div 注入，避免畫面跑版 */
+.mermaid-error,
+svg[id^="dmermaid-render-"]:not([style*="max-width"]) {
+  display: none !important;
+}
+
