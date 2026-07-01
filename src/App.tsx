@@ -71,6 +71,8 @@ function App() {
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
 
   useEffect(() => {
+    // 避免在切換引擎的 debounce 期間，使用「新引擎」去編譯「舊語言的程式碼」導致語法錯誤印出
+    if (debouncedCode !== state.code) return;
     if (!renderer || !debouncedCode) return;
 
     let isMounted = true;
@@ -96,7 +98,7 @@ function App() {
       isMounted = false;
       clearTimeout(loadingTimer);
     };
-  }, [debouncedCode, renderer, version]);
+  }, [debouncedCode, renderer, version, state.code]);
 
   useEffect(() => {
     if (isDarkMode) {

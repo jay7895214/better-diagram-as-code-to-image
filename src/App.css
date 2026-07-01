@@ -395,6 +395,67 @@ input, select, button, textarea {
   justify-content: center;
   align-items: center;
   transition: opacity 0.2s;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.zoom-content-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+
+.zoom-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 41, 59, 0.9);
+  color: #cbd5e1;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.zoom-btn:hover {
+  background-color: rgba(51, 65, 85, 0.9);
+}
+
+.zoom-label {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 41, 59, 0.9);
+  border-radius: 8px;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.zoom-divider {
+  width: 1px;
+  height: 8px;
+  background-color: #475569;
+  margin: 0 auto;
 }
 
 .svg-container.loading {
