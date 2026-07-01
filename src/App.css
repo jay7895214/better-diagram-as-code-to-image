@@ -6,6 +6,11 @@
   overflow: hidden; /* Lock viewport */
 }
 
+input, select, button, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .app-header {
   height: 60px;
   background-color: var(--header-bg, #f8f9fa);
@@ -43,6 +48,12 @@
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
+}
+
+.selector-group label,
+.control-group label {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .selector-group select {
@@ -150,7 +161,7 @@
   display: flex;
   flex: 1;
   overflow: hidden;
-  height: 100%;
+  min-height: 0; /* Critical: allow flex child to shrink below content size */
 }
 
 .panel-group {
@@ -163,6 +174,16 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+}
+
+/* Mobile full-screen content area — must propagate flex height down to CodeMirror */
+.mobile-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;    /* break the "auto" floor so child can shrink */
+  overflow: hidden;
+  position: relative;
 }
 
 .editor-wrapper {
@@ -197,6 +218,7 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  font-size: 0.9rem;
 }
 
 .editor-scroll-area .cm-scroller {
@@ -540,4 +562,72 @@ svg[id^="dmermaid-render-"]:not([style*="max-width"]) {
 :root.dark .editor-paste-btn:hover {
   background-color: #3e3e42;
   color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .header-controls, .export-controls, .export-options {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .header-controls::-webkit-scrollbar,
+  .export-controls::-webkit-scrollbar,
+  .export-options::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Mobile Tabs Chrome-like styling */
+.mobile-tabs-container {
+  display: flex;
+  background-color: var(--border-color, #e5e5e5);
+  padding-top: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  gap: 4px;
+}
+
+:root.dark .mobile-tabs-container {
+  background-color: #1a1a1a;
+}
+
+.mobile-tab {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 12px 12px 0 0;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: var(--text-color, #666);
+  transition: background-color 0.2s, color 0.2s;
+  text-align: center;
+}
+
+.mobile-tab.active {
+  background-color: #ffffff; /* match light content area */
+  color: var(--text-color, #333);
+}
+
+:root.dark .mobile-tab {
+  color: #888;
+}
+
+:root.dark .mobile-tab.active {
+  background-color: #242424; /* match dark content area */
+  color: #eee;
 }

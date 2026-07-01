@@ -8,7 +8,7 @@ import { useDebounce } from "./hooks/useDebounce";
 import { getRendererById } from "./renderers/registry";
 import { useDraftPersistence, getDraftState } from "./hooks/useDraftPersistence";
 import { generateShareUrl, parseShareUrl } from "./share/shareUrl";
-import { Moon, Sun, Share2, GripVertical, GripHorizontal } from "lucide-react";
+import { Moon, Sun, Share2, GripVertical } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from "react-resizable-panels";
 import { useMediaQuery } from "./hooks/useMediaQuery";
@@ -68,6 +68,7 @@ function App() {
   const [svg, setSvg] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
 
   useEffect(() => {
     if (!renderer || !debouncedCode) return;
@@ -180,19 +181,18 @@ function App() {
             <option value="zh-CN">简体</option>
           </select>
           <button 
-            className="header-btn" 
+            className="btn btn-secondary flex-shrink-0" 
             onClick={handleShare}
             title={t("app.copyLink")}
           >
             <Share2 size={16} />
-            {t("app.copyLink")}
           </button>
           <button 
-            className="theme-toggle" 
+            className="btn btn-secondary flex-shrink-0" 
             onClick={() => setIsDarkMode(!isDarkMode)}
             title={t("app.themeToggle")}
           >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </div>
       </header>
@@ -202,22 +202,49 @@ function App() {
         <ExportControls svg={svg} disabled={isLoading || !!error || !svg} />
       </div>
 
+      {isMobile && (
+        <div className="mobile-tabs-container">
+          <button 
+            className={`mobile-tab ${activeTab === 'editor' ? 'active' : ''}`}
+            onClick={() => setActiveTab("editor")}
+          >
+            Editor
+          </button>
+          <button 
+            className={`mobile-tab ${activeTab === 'preview' ? 'active' : ''}`}
+            onClick={() => setActiveTab("preview")}
+          >
+            Preview
+          </button>
+        </div>
+      )}
+
       <main className="app-main">
-        <PanelGroup orientation={isMobile ? "vertical" : "horizontal"} className="panel-group">
-          <Panel defaultSize={50} minSize={20} className="left-pane">
-            <Editor code={code} onChange={handleCodeChange} isDarkMode={isDarkMode} />
-          </Panel>
-          
-          <PanelResizeHandle className="panel-resizer">
-            <div className="resizer-handle">
-              {isMobile ? <GripHorizontal size={16} /> : <GripVertical size={16} />}
-            </div>
-          </PanelResizeHandle>
-          
-          <Panel defaultSize={50} minSize={20} className="right-pane">
-            <PreviewPane svg={svg} error={error} isLoading={isLoading} />
-          </Panel>
-        </PanelGroup>
+        {!isMobile ? (
+          <PanelGroup orientation="horizontal" className="panel-group">
+            <Panel defaultSize={50} minSize={20} className="left-pane">
+              <Editor code={code} onChange={handleCodeChange} isDarkMode={isDarkMode} />
+            </Panel>
+            
+            <PanelResizeHandle className="panel-resizer">
+              <div className="resizer-handle">
+                <GripVertical size={16} />
+              </div>
+            </PanelResizeHandle>
+            
+            <Panel defaultSize={50} minSize={20} className="right-pane">
+              <PreviewPane svg={svg} error={error} isLoading={isLoading} />
+            </Panel>
+          </PanelGroup>
+        ) : (
+          <div className="mobile-content">
+            {activeTab === "editor" ? (
+              <Editor code={code} onChange={handleCodeChange} isDarkMode={isDarkMode} />
+            ) : (
+              <PreviewPane svg={svg} error={error} isLoading={isLoading} />
+            )}
+          </div>
+        )}
       </main>
 
       <footer className="app-footer">

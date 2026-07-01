@@ -101,18 +101,17 @@ export function ExportControls({ svg, disabled }: ExportControlsProps) {
           className="btn btn-primary" 
           onClick={handleDownload}
           disabled={disabled || isExporting}
+          title={t("export.download")}
         >
           {isExporting ? <Loader2 className="spinner" size={16} /> : <Download size={16} />}
-          {t("export.download")}
         </button>
         <button 
           className="btn btn-secondary" 
           onClick={handleCopy}
           disabled={disabled || isExporting}
-          title={format === "jpg" ? t("export.copyWarning") : ""}
+          title={format === "jpg" ? t("export.copyWarning") : t("export.copy")}
         >
           {isExporting ? <Loader2 className="spinner" size={16} /> : <Copy size={16} />}
-          {t("export.copy")}
         </button>
       </div>
     </div>

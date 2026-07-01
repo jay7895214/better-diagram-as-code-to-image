@@ -2,7 +2,7 @@
 
 [繁體中文](./README.zh-TW.md) | [English](./README.md)
 
-![Version](https://img.shields.io/badge/version-1.5.0-blue)
+![Version](https://img.shields.io/badge/version-1.6.0-blue)
 ![React](https://img.shields.io/badge/react-18.3.1-61DAFB?logo=react)
 
 A powerful tool to render Mermaid, PlantUML, and D2 code in real-time and export them as high-quality images.
